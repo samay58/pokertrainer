@@ -1,0 +1,7 @@
+{
+  "name": "@poker-trainer/curriculum",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./lessons.json",
+  "files": ["lessons.json"]
+}

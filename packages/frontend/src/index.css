@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Inter Font */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYAZ9hiA.woff2') format('woff2');
+}
+
+/* Base styles */
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    @apply bg-bg-surface text-text-primary;
+  }
+
+  body {
+    @apply font-sans antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Remove default button styles */
+  button {
+    @apply outline-none;
+  }
+
+  /* Focus styles */
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-blue-action;
+  }
+}
+
+/* Component styles */
+@layer components {
+  /* Card styles */
+  .card-3d {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+  }
+
+  /* Chip styles with gradient */
+  .chip-stack {
+    @apply relative;
+    background: linear-gradient(145deg, #f5f5f7 0%, #d8d8da 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  /* Table felt texture */
+  .table-felt {
+    @apply bg-green-felt relative overflow-hidden;
+    background-image: 
+      radial-gradient(ellipse at center, rgba(15, 81, 50, 0.8) 0%, rgba(10, 56, 35, 0.9) 100%),
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(0, 0, 0, 0.03) 10px,
+        rgba(0, 0, 0, 0.03) 20px
+      );
+  }
+
+  /* Glow effect for active player */
+  .player-glow {
+    @apply relative;
+    &::before {
+      content: '';
+      @apply absolute inset-0 rounded-lg;
+      background: radial-gradient(ellipse at center, rgba(0, 123, 255, 0.3) 0%, transparent 70%);
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+  }
+
+  /* Button variants */
+  .btn {
+    @apply px-4 py-2 rounded-lg font-semibold transition-all duration-200;
+    @apply hover:scale-105 active:scale-95;
+  }
+
+  .btn-primary {
+    @apply btn bg-blue-action text-white hover:bg-blue-600;
+  }
+
+  .btn-success {
+    @apply btn bg-green-action text-white hover:bg-green-600;
+  }
+
+  .btn-danger {
+    @apply btn bg-red-action text-white hover:bg-red-600;
+  }
+
+  .btn-secondary {
+    @apply btn bg-border-dim text-text-secondary hover:bg-gray-700;
+  }
+}
+
+/* Utility overrides */
+@layer utilities {
+  /* Smooth scrolling */
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
+
+  /* No scrollbar */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* 3D transforms */
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+}
