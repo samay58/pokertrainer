@@ -54,39 +54,3 @@ export function moveBetsToPots(gameState: GameState): GameState {
   newState.pots = pots;
   return newState as GameState;
 }
-
-export function allBetsSettled(gameState: GameState): boolean {
-  const activePlayers = gameState.players.filter(
-    p => p.status === PlayerStatus.ACTIVE
-  );
-  
-  // If only one or zero active players, betting is done
-  if (activePlayers.length <= 1) {
-    return true;
-  }
-  
-  // Check if all active players have matched the highest bet or are all-in
-  const highestBet = gameState.highestBet;
-  const allMatched = gameState.players.every(p => 
-    p.status === PlayerStatus.FOLDED ||
-    p.status === PlayerStatus.ALL_IN ||
-    p.currentBet === highestBet
-  );
-  
-  if (!allMatched) {
-    return false;
-  }
-  
-  // If there's a bet/raise, action must return to the last aggressor
-  if (gameState.lastAggressor >= 0 && gameState.highestBet > 0) {
-    // Everyone has matched, and we're back to the aggressor - round complete
-    return gameState.toAct === gameState.lastAggressor;
-  }
-  
-  // If no bets (everyone checking), we need everyone to act exactly once
-  if (gameState.highestBet === 0) {
-    return gameState.numActionsThisRound >= activePlayers.length;
-  }
-  
-  return false;
-}

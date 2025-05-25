@@ -7,10 +7,8 @@ import {
   newHand,
   applyAction,
   getLegalActions,
-  performShowdown,
-  allBetsSettled,
-  GameStage,
-  dealCommunityCards
+  advanceGameStage,
+  GameStage
 } from '@poker-trainer/engine'
 
 interface GameContextValue {
@@ -56,28 +54,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         toAct: newState.toAct,
         players: newState.players.map(p => ({ currentBet: p.currentBet, status: p.status }))
       })
-      const betsSettled = allBetsSettled(newState)
-      console.log('Bets settled result:', betsSettled)
-      
-      if (betsSettled) {
-        console.log('Moving to next stage from:', newState.stage)
-        // Move to next stage
-        switch (newState.stage) {
-          case GameStage.PRE_FLOP:
-            newState = dealCommunityCards(newState, 3)
-            break
-          case GameStage.FLOP:
-            newState = dealCommunityCards(newState, 1)
-            break
-          case GameStage.TURN:
-            newState = dealCommunityCards(newState, 1)
-            break
-          case GameStage.RIVER:
-            newState = performShowdown(newState)
-            // Auto-start new hand after 3 seconds
-            setTimeout(startNewHand, 3000)
-            break
-        }
+      newState = advanceGameStage(newState)
+
+      if (newState.stage === GameStage.COMPLETE) {
+        setTimeout(startNewHand, 3000)
       }
       
       setGameState(newState)
