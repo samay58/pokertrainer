@@ -4,7 +4,8 @@ import {
   ActionType,
   PlayerStatus
 } from '@poker-trainer/shared-types';
-import { getNextActiveSeat, structuredClone } from '../state/gameState';
+import { structuredClone } from '../state/gameState';
+import { updateToAct } from '../state/reducers/bettingRound';
 import { getLegalActions } from './legalActions';
 
 export function applyAction(
@@ -123,7 +124,5 @@ export function applyAction(
   newState.numActionsThisRound++;
   
   // Move to next player
-  newState.toAct = getNextActiveSeat(newState.toAct, newState);
-  
-  return newState as GameState;
+  return updateToAct(newState) as GameState;
 }
