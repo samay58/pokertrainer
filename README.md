@@ -34,6 +34,14 @@ state = applyAction(state, { playerId: 'player-1', type: ActionType.CHECK });
 state = advanceGame(state); // progress to next stage (flop, turn, river or showdown)
 ```
 
+## Development
+
+Start the development server:
+
+```bash
+pnpm run dev
+```
+
 ## Testing
 
 Run all unit tests across packages using:
